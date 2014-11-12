@@ -182,6 +182,8 @@ Instead, we use `grunt dist` to create a merged version, which we may load throu
 
 **_Above:_ The all-new ShopDemo using the _darkly_ theme with widget styles. Not too shabby, eh?**
 
+Have a look at the [dark theme in action](//laxarjs.github.io/shop_demo/darkly.html#/shopDemo).
+
 Of course, there are still some problems with this way of styling widgets.
 For example, if we would like to change the shade of blue that is used in our theme, we would have to update multiple source code locations.
 It would be better to have some way to define these values in our theme and reuse them from individual widgets.  
