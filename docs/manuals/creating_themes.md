@@ -11,47 +11,51 @@ Preliminary readings:
 
 Sometimes you would like to use the _one widget_ in _two or more applications_.
 For this, usually you want the widget to _behave identically_, but _look differently_.
-LaxarJS has the concept of _themes_ to help you achieve this.
+Alternatively, you would sometimes like to offer the same application in different appearances.
+LaxarJS has the concept of _themes_ to help you achieve these things.
 
 
 ## Why Themes?
 
-LaxarJS ships with a so-called _default theme_, which is actually just Bootstrap CSS with a few additional classes.
+LaxarJS ships with a so-called _default theme_, which is actually just [Bootstrap CSS](http://getbootstrap.com/css/) together with [Font Awesome](http://fortawesome.github.io/Font-Awesome/) and a few additional classes.
+There are several ways to add your own styles.
 
 
 ### From Ad-Hoc Styles to Theme Folders… 
 
 Usually, you will need to add some CSS classes of your own.
-For example, the vast majority of web application needs some styling for the page background, centering, a special logo or custom header and footer areas.
+For example, the vast majority of web application needs some styling for the page background and positioning or custom header and footer areas.
 To include such _ad-hoc styles_, you _could_ simply add a CSS file of your own to the project, and load it from the debug.html and index.html files using the `<link>` tag.
 However, it is _recommended_ to add these styles to your main application layout instead, into a sub-folder called `default.theme/css`.
 
 The _benefit_ of using such a _theme folder_ is that
 
-  * your CSS will be _automatically bundled and compressed_ together with the other CSS (no `<link>` tag needed) and that
+  * your CSS will be _bundled and compressed_ together with Bootstrap (no `<link>` tag needed) and that
   * you can support different _themes_ simply by adding more `.theme` folders.
 
-Due to the first point, using the theme folders is useful and recommended, even if you only use (and maybe customize) the default theme.
-The LaxarJS demo application [MashupDemo](http://laxarjs.org/demos/mashupdemo/) uses this no-fuss approach to customizing Bootstrap.
+Due to the first point, using the theme folders is useful and recommended _even_ if you only use (and maybe customize) the default theme.
+The LaxarJS [MashupDemo](http://laxarjs.org/demos/mashupdemo/) application takes this no-fuss approach to customizing Bootstrap.
 
 
 ### …and to Custom Themes
 
-As soon as you use multiple layouts, the previous approach does not really scale anymore.
+As soon as you use multiple page layouts, the previous approach does not really scale anymore: you would have to duplicate your global styles to all of them.
 In these cases, creating your own theme is definitely recommended.
 A detailed explanation of [creating a theme](#creating-a-theme) is given below.
 
 
 ### A Note on Compass/SCSS
 
-When using theme folders or entire themes, the runtime will only ever look at `css/` sub-folders.
-This means that it is entirely _up to you_ which CSS authoring tools you would like to use.
+When using theme folders or entire themes, the runtime will only ever look at `.css` files in `css` sub-folders.
+This means that it is entirely _up to you_ which (if any) CSS authoring tools you would like to use.
 
 That being said, we use Compass/SCSS to create themes, and the default-theme is based on the SCSS version of Bootstrap.
 Using this approach makes it very easy to create a custom theme just by changing some Bootstrap SCSS variables.
 Also, by using SCSS variables defined in the theme, widgets and controls can provide a consistent appearance.
+After explaining themes in general, below are instructions on [creating an SCSS theme](#creating-an-scss-theme).
 
 
+<a name="creating-a-theme"></a>
 ## Creating your own Theme
 
 Let us create our own theme for an existing application, the [LaxarJS ShopDemo](http://laxarjs.org/demos/shopdemo/).
@@ -183,6 +187,7 @@ For example, if we would like to change the shade of blue that is used in our th
 It would be better to have some way to define these values in our theme and reuse them from individual widgets.  
 
 
+<a name="creating-an-scss-theme"></a>
 ### Adding a Theme using Compass/SCSS
 
 To support centralized variables, you can use a _compiles-to-CSS_ language such as [scss/sass](http://sass-lang.com/) or _[less](http://lesscss.org/)_.
