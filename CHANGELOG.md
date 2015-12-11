@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#247](https://github.com/LaxarJS/laxar/issues/247): tooling: added page inspection api
+
 
 ## v1.2.0-alpha.1
 
