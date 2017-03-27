@@ -75,7 +75,7 @@ export function create( adapters, artifacts, configuration ) {
     * @name BootstrappingInstance
     * @constructor
     */
-   const api = { flow, testing, bootstrap };
+   const api = { flow, page, testing, bootstrap };
    return api;
 
    /**
@@ -96,6 +96,17 @@ export function create( adapters, artifacts, configuration ) {
       assert( anchorElement ).isNotNull();
       assert.state( anchorElement.nodeType === Node.ELEMENT_NODE );
       bootstrappingSchedule.items.push( { type: 'flow', name, anchorElement } );
+      return api;
+   }
+
+   /**
+    * TODO
+    */
+   function page( name, anchorElement ) {
+      assert( name ).hasType( String ).isNotNull();
+      assert( anchorElement ).isNotNull();
+      assert.state( anchorElement.nodeType === Node.ELEMENT_NODE );
+      bootstrappingSchedule.items.push( { type: 'page', name, anchorElement } );
       return api;
    }
 
@@ -129,22 +140,31 @@ export function create( adapters, artifacts, configuration ) {
 
       const { log } = services;
       items.forEach( item => {
-         // other item types will be added in future commits, but for now:
-         assert.state( item.type === 'flow' );
-         const { name, anchorElement } = item;
 
-         whenDocumentReady( () => {
-            log.trace( `laxar.bootstrap: loading fow: ${name}` );
-            services.pageService.createControllerFor( anchorElement );
-            services.flowController
-               .loadFlow( name )
-               .then( () => {
-                  log.trace( 'laxar.bootstrap: flow loaded' );
-               }, err => {
-                  log.fatal( 'laxar.bootstrap: failed to load flow.' );
-                  log.fatal( 'Error [0].\nStack: [1]', err, err && err.stack );
-               } );
-         } );
+         // other item types will be added in future commits, but for now:
+         const { name, anchorElement } = item;
+         if( item.type === 'flow' ) {
+            whenDocumentReady( () => {
+               log.trace( `laxar.bootstrap: loading fow: ${name}` );
+               services.pageService.createControllerFor( anchorElement );
+               services.flowController
+                  .loadFlow( name )
+                  .then( () => {
+                     log.trace( 'laxar.bootstrap: flow loaded' );
+                  }, err => {
+                     log.fatal( 'laxar.bootstrap: failed to load flow.' );
+                     log.fatal( 'Error [0].\nStack: [1]', err, err && err.stack );
+                  } );
+            } );
+         }
+         else if( item.type === 'page' ) {
+            whenDocumentReady( () => {
+               log.trace( `laxar.bootstrap: loading page: ${name}` );
+               const controller = services.pageService.createControllerFor( anchorElement );
+               controller.setupPage( name );
+            } );
+         }
+
       } );
    }
 
